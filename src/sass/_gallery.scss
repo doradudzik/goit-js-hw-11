@@ -1,0 +1,40 @@
+.is-hidden {
+  display: none;
+}
+.load-more {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  margin-left: 50%;
+}
+.gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.photo-card {
+  width: calc(100% / 3 - 10px * 2);
+  margin: 10px;
+  background: #ffffff;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  // overflow: hidden;
+}
+.photo-img {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+.info {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 10px;
+  text-align: center;
+  color: black;
+  padding: 10px;
+}
+.info-item {
+  margin: 0;
+}

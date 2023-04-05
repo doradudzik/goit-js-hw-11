@@ -1,3 +1,7 @@
+body {
+  background: linear-gradient(to right, #16222a, #3a6073);
+}
+// Style button Load more
 .is-hidden {
   display: none;
 }
@@ -5,27 +9,40 @@
   margin-top: 50px;
   margin-bottom: 30px;
   margin-left: 50%;
+  height: 35px;
+  font-size: larger;
+  border-radius: 15px;
+  border: none;
+  color: #16222a;
+  transform: translate(-50%);
+  padding: 5px;
 }
+.load-more:hover {
+  cursor: pointer;
+  box-shadow: 2px 3px 10px 3px rgba(255, 255, 255, 0.2);
+}
+//Style galerii
 .gallery {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   text-align: center;
 }
+//Style karty zdjęcia
 .photo-card {
-  width: calc(100% / 3 - 10px * 2);
+  width: calc(100% / 4 - 10px * 2);
   margin: 10px;
   background: #ffffff;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
   cursor: pointer;
-  // overflow: hidden;
 }
 .photo-img {
   height: 300px;
   width: 100%;
   object-fit: cover;
 }
+//Style informacji na karcie zdjęcia
 .info {
   display: flex;
   justify-content: space-evenly;
@@ -37,4 +54,49 @@
 }
 .info-item {
   margin: 0;
+}
+//Style paska wyszukiwania/ input/ btn
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  background: linear-gradient(to right, #16222a, #3a6073);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+  height: 100px;
+  width: 100%;
+}
+.search-form input {
+  width: 300px;
+  height: 45px;
+  font-size: x-large;
+  padding-left: 10px;
+  border: solid 2px white;
+  border-radius: 15px;
+  background-color: transparent;
+  outline: none;
+  color: #ffffff;
+}
+.search-form input:hover,
+.search-form input:focus {
+  border: solid 3px white;
+  border-radius: 15px;
+  background-color: transparent;
+  outline: none;
+  color: #ffffff;
+}
+
+.search-form button {
+  margin-left: 10px;
+  height: 35px;
+  font-size: larger;
+  border-radius: 15px;
+  border: none;
+  color: #16222a;
+}
+.search-form button:hover,
+.search-form button:focus {
+  cursor: pointer;
+  box-shadow: 2px 3px 10px 3px rgba(255, 255, 255, 0.2);
 }

@@ -9,11 +9,12 @@ const loadMoreBtn = document.querySelector('.load-more');
 
 loadMoreBtn.classList.add('is-hidden');
 
-let isShown = 0;
+let isShown = 0; //Zmienna mówiąca ile obrazów jest aktualnie wyświetlanych na stronie
+let pageNumber = 1; //Domyślny numer strony podczas pobierania zdjęć
 
 async function fetchPhotos() {
+  //pobieranie zdjęć z API serwisu Pixabay za pomocą biblioteki axios
   try {
-    let pageNumber = 1;
     let imagesPerPage = 40;
     let searchFormValue = searchFormTextInput.value;
 
@@ -35,26 +36,10 @@ async function fetchPhotos() {
     console.error(error);
   }
 }
-// 1. Sposób/ Na początku robię zmienną globalną page number i tu ją zmieniam
-const increasePageNumber = () => {
-  pageNumber = pageNumber + 1;
-  console.log(pageNumber);
-  return pageNumber;
-};
-//2 Sposób/ Biorę numer strony z localStorage i wrzucam całą funkcję increasePageNumber do  pageNumber w fetchPhotos powyżej.
-// const increasePageNumber = () => {
-//   //zwiększanie numeru strony na podstawie local.storage
-//   if (localStorage.page) {
-//     localStorage.page = Number(localStorage.page) + 1;
-//   } else {
-//     localStorage.page = 1;
-//   }
-//   console.log(localStorage.page);
-//   return localStorage.page;
-// };
-// Czyszczenie localStorage
+
 const resetPage = () => {
-  localStorage.removeItem('page');
+  //reset numeru strony gdy wywołana zostanie funkcja onSearch
+  pageNumber = 1;
 };
 
 const onSearch = event => {
@@ -65,8 +50,6 @@ const onSearch = event => {
 
   fetchPhotos(textInput) //zbieranie value z input
     .then(data => {
-      isShown = +data.hits.length;
-
       if (textInput === '') {
         Notify.warning('Please, fill the main field');
         return;
@@ -80,18 +63,12 @@ const onSearch = event => {
         gallery.innerHTML = '';
         return;
       }
-
-      if (isShown < data.total) {
-        Notify.success(`Hooray! We found ${data.total} images.`);
-        loadMoreBtn.classList.remove('is-hidden');
-      }
-      createPhotoGallery(data.hits); //tworzenie listy z danych na podstawie aktualnego textInput
+      createPhotoGallery(data.hits); //tworzenie galerii z danych na podstawie aktualnego textInput
       isShown += data.hits.length;
 
-      if (isShown >= data.total) {
-        Notify.info(
-          "We're sorry, but you've reached the end of search results."
-        );
+      if (isShown < data.totalHits) {
+        Notify.success(`Hooray! We found ${data.totalHits} images.`);
+        loadMoreBtn.classList.remove('is-hidden');
       }
     })
     .catch(error => {
@@ -142,7 +119,15 @@ function createPhotoGallery(photos) {
 }
 
 searchForm.addEventListener('submit', onSearch);
-// loadMoreBtn.addEventListener('click', () => {
-//   // increasePageNumber();
-//   // fetchPhotos();
-// });
+loadMoreBtn.addEventListener('click', async () => {
+  pageNumber = pageNumber + 1;
+  const newData = await fetchPhotos();
+  createPhotoGallery(newData.hits);
+
+  isShown += newData.hits.length;
+
+  if (isShown >= newData.totalHits) {
+    Notify.info("We're sorry, but you've reached the end of search results.");
+    loadMoreBtn.classList.add('is-hidden');
+  }
+});
